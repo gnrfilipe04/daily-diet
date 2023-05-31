@@ -16,6 +16,27 @@ function HeaderComponent() {
     const theme = useTheme()
     const { percentInDiet } = useMeals()
 
+    function createNewCommit(){
+        const github_api_url = `https://api.github.com/repos/gnrfilipe04/daily-diet/contents/json-test.json`;
+        const commit_message = 'create commit test';
+        const file_content = JSON.stringify({ name: 'test2'});
+        const branch_name = 'test';
+
+        axios.post(github_api_url, {
+            headers: {
+                'Accept': 'application/vnd.github.v3+json',
+                'Authorization': 'token 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'
+            },
+            body: JSON.stringify({
+                message: commit_message,
+                content: Buffer.from(file_content, 'base64'), // The content must be base64 encoded
+                branch: branch_name
+            })
+        })
+            .then(data => console.log(data))
+            .catch(console.log)
+    }
+
     return (
         <>
             <HStack justifyContent={'space-between'} alignItems={'center'} paddingTop={'66px'}>
@@ -41,6 +62,7 @@ function HeaderComponent() {
                 <MyButton 
                     title="Nova refeição"
                     size={'lg'}
+                    onPress={createNewCommit}
                     bgColor={'gray.600'} 
                     leftIcon={<Ionicons name="md-add" size={24} color={theme.colors.gray[100] }/>}
                 />
