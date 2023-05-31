@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 
 export function useMeals(){
     const mockMeals = [
@@ -16,6 +16,12 @@ export function useMeals(){
                 hour: '21:00',
                 value: 'Sequela',
                 inDiet: false
+            },
+            {   
+                id: '3',
+                hour: '21:00',
+                value: 'Chocolate',
+                inDiet: false
             }
           ],
         },
@@ -27,12 +33,28 @@ export function useMeals(){
                   hour: '12:00',
                   value: 'Alaminuta',
                   inDiet: true
-              }
+              },
+              {   
+                id: '2',
+                hour: '12:00',
+                value: 'Salada',
+                inDiet: true
+            }
             ],
+            
           },
     ];
 
     const [ meals, setMeals ] = useState([] as typeof mockMeals)
+
+    const percentInDiet = useMemo(() => {
+        const totalMeals = meals.reduce((acc, item) => [...acc, ...item.data], [])
+        const mealsInDiet = totalMeals.filter(item => item.inDiet)
+
+        return  (100 * mealsInDiet.length) / totalMeals.length
+
+
+    },  [meals])
 
     function getMeals(){
         setMeals(mockMeals)
@@ -40,9 +62,11 @@ export function useMeals(){
 
     useEffect(() => {
         getMeals()
+        
     }, [])
 
     return {
-        meals
+        meals,
+        percentInDiet
     }
 }

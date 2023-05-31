@@ -1,32 +1,43 @@
 import { Avatar, Box, HStack, Image, useTheme, Text, VStack, SectionList, Pressable } from "native-base";
 import Logo from '../../assets/Logo.png'
 import { StatusBar } from "react-native";
-import { Percent } from "../../components/Percent";
+import { InfoPanel } from "../../components/InfoPanel";
 import { MyButton } from "../../components/MyButton";
 import { Ionicons } from '@expo/vector-icons'
 import { useMeals } from "./hooks/useMeals";
 import { MyListItem } from "../../components/MyListItem";
+import { Feather } from '@expo/vector-icons'
+import { MyTitle } from "../../components/MyTitle";
+import { Buffer } from 'buffer'
+import axios from "axios";
 
 
 function HeaderComponent() {
     const theme = useTheme()
+    const { percentInDiet } = useMeals()
 
     return (
         <>
-        <HStack justifyContent={'space-between'} alignItems={'center'} paddingTop={'66px'}>
+            <HStack justifyContent={'space-between'} alignItems={'center'} paddingTop={'66px'}>
                 <Image source={Logo} alt="Logo" w={'82px'} h={'37px'}/>
                 <Avatar borderWidth={3} borderColor={'white'}/>
             </HStack>
 
-            <Percent
+            <InfoPanel
                 mt={'36px'} 
-                value="91,20%"
-                bgColor="green.100"
-                iconColor={theme.colors.green[800]}
+                value={`${percentInDiet.toFixed(2)}%`}
+                bgColor={percentInDiet < 50 ? 'red.300' : 'green.300'}
+                infoFontSize={'32px'}
+                rightIcon={
+                    <Feather 
+                        name="arrow-up-right" 
+                        color={percentInDiet < 50 ? theme.colors.red[800] : theme.colors.green[800]} size={24}
+                    />
+                }
             />
             
             <VStack mt={'40px'} space={'20px'}>
-                <Text fontSize={'16px'}>Refeições</Text>
+                <MyTitle value="Refeições"/>
                 <MyButton 
                     title="Nova refeição"
                     size={'lg'}
@@ -34,7 +45,7 @@ function HeaderComponent() {
                     leftIcon={<Ionicons name="md-add" size={24} color={theme.colors.gray[100] }/>}
                 />
             </VStack>
-            </>
+        </>
     )
 }
 
