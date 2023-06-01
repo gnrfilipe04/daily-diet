@@ -9,6 +9,7 @@ interface PercentProps extends InterfaceBoxProps {
     leftIcon?: JSX.Element
     infoFontSize?: ITextProps['fontSize']
     infoColor?: ColorType
+    description: string
 }
 
 function InfoPanelComponent({ 
@@ -18,6 +19,7 @@ function InfoPanelComponent({
     leftIcon, 
     infoFontSize = '24px', 
     infoColor = 'gray.600',
+    description,
     ...props 
 }: PercentProps){
     return (
@@ -29,7 +31,7 @@ function InfoPanelComponent({
             </HStack>
             <VStack alignItems={'center'}>
                 <Text color={infoColor} fontSize={infoFontSize} textAlign={'center'} fontWeight={'700'}>{value}</Text>
-                <Text color={infoColor} textAlign={'center'}>das refeições dentro da dieta</Text>
+                <Text color={infoColor} textAlign={'center'}>{description}</Text>
             </VStack>
         </Box>
     )

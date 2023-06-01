@@ -1,13 +1,11 @@
-import { StatusBar } from 'expo-status-bar';
-import { NativeBaseProvider, Center, Text } from 'native-base';
+import { NativeBaseProvider } from 'native-base';
 import { theme } from './src/theme';
-import { Home } from './src/screens/Home';
-import { Stats } from './src/screens/Stats';
+import { Routes } from './src/routes';
 
 export default function App() {
   return (
     <NativeBaseProvider theme={theme}>
-      <Home />
+      <Routes />
     </NativeBaseProvider>
   );
 }

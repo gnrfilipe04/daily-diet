@@ -8,10 +8,12 @@ import { useMeals } from "./hooks/useMeals";
 import { MyListItem } from "../../components/MyListItem";
 import { Feather } from '@expo/vector-icons'
 import { MyTitle } from "../../components/MyTitle";
+import { useNavigation } from "@react-navigation/native";
 
 function HeaderComponent() {
     const theme = useTheme()
-    const { percentInDiet } = useMeals()
+    const { stats, limiar } = useMeals()
+    const { navigate } = useNavigation()
 
     return (
         <>
@@ -20,22 +22,26 @@ function HeaderComponent() {
                 <Avatar borderWidth={3} borderColor={'white'}/>
             </HStack>
 
-            <InfoPanel
-                mt={'36px'} 
-                value={`${percentInDiet.toFixed(2)}%`}
-                bgColor={percentInDiet < 50 ? 'red.300' : 'green.300'}
-                infoFontSize={'32px'}
-                rightIcon={
-                    <Feather 
-                        name="arrow-up-right" 
-                        color={percentInDiet < 50 ? theme.colors.red[800] : theme.colors.green[800]} size={24}
-                    />
-                }
-            />
+            <Pressable onPress={() => navigate('stats')}>
+                <InfoPanel
+                    mt={'36px'}
+                    value={`${stats.percentInDiet.toFixed(2)}%`}
+                    bgColor={stats.percentInDiet < limiar ? 'red.300' : 'green.300'}
+                    infoFontSize={'32px'}
+                    description="das refeições dentro da dieta"
+                    rightIcon={
+                        <Feather 
+                            name="arrow-up-right" 
+                            color={stats.percentInDiet < limiar ? theme.colors.red[800] : theme.colors.green[800]} size={24}
+                        />
+                    }
+                />
+            </Pressable>
             
             <VStack mt={'40px'} space={'20px'}>
                 <MyTitle value="Refeições"/>
                 <MyButton 
+                    onPress={() => navigate('createmeal')}
                     title="Nova refeição"
                     size={'lg'}
                     bgColor={'gray.600'} 
@@ -48,8 +54,8 @@ function HeaderComponent() {
 
 export function Home(){
     const theme = useTheme()
-
     const { meals } = useMeals()
+    const { navigate } = useNavigation()
 
     return (
         <Box flex={1} bgColor={'gray.900'} paddingX={'20px'}>
@@ -62,6 +68,7 @@ export function Home(){
             <SectionList
                 ListHeaderComponent={HeaderComponent}
                 sections={meals}
+                showsVerticalScrollIndicator={false}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item, section }) => (
                     <Pressable mb={'10px'} onPress={() => console.log({ item, section })}>
