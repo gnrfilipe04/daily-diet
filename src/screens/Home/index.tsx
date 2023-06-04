@@ -45,6 +45,7 @@ function HeaderComponent() {
                     title="Nova refeição"
                     size={'lg'}
                     bgColor={'gray.600'} 
+                    py={'20px'}
                     leftIcon={<Ionicons name="md-add" size={24} color={theme.colors.gray[100] }/>}
                 />
             </VStack>
