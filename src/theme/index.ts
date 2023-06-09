@@ -1,6 +1,13 @@
 import { extendTheme } from 'native-base';
 
+// Define the config
+const config = {
+  useSystemColorMode: false,
+  initialColorMode: 'dark',
+}
+
 export const theme = extendTheme({
+    config,
     colors: {
       gray: {
         100: '#FAFAFA',
@@ -21,7 +28,4 @@ export const theme = extendTheme({
         300: '#F3BABD',
         800: '#BF3B44'
       },
-    },
-    config: {
-      initialColorMode: 'dark',
-}})
+    }})

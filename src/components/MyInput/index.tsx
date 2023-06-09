@@ -3,6 +3,7 @@ import { Input } from 'native-base'
 import { Controller, Control, FieldValues, Path  } from 'react-hook-form'
 import { ErrorMessage } from '../ErrorMessage';
 import { InterfaceInputProps } from 'native-base/lib/typescript/components/primitives/Input/types';
+import { NativeSyntheticEvent, NativeTouchEvent } from 'react-native';
 
 interface MyInputProps<T extends FieldValues> {
   control: Control<T, any>;
@@ -12,7 +13,8 @@ interface MyInputProps<T extends FieldValues> {
   name: Path<T>;
   type?: InterfaceInputProps['type'];
   errorMessage?: string;
-  defaultValue?: string
+  defaultValue?: string;
+  editable?: boolean
 }
 
 export function MyInput<T extends FieldValues>({
@@ -24,6 +26,7 @@ export function MyInput<T extends FieldValues>({
   errorMessage,
   type,
   defaultValue,
+  editable
 }: MyInputProps<T>){
 
   return (
@@ -40,8 +43,8 @@ export function MyInput<T extends FieldValues>({
               selectionColor={'green.300'}
               cursorColor={'#F4E6E7'}
               bgColor={'transparent'}
+              editable={editable}
               isDisabled={Boolean(defaultValue)}
-              placeholderTextColor={'gray.300'}
               fontSize={'16px'} 
               type={type}
               secureTextEntry={secureTextEntry}
@@ -49,7 +52,8 @@ export function MyInput<T extends FieldValues>({
               _focus={{
                 placeholderTextColor: 'gray.100',
                 borderColor: 'green.300',
-                cursorColor: '#F4E6E7'
+                cursorColor: '#F4E6E7',
+                selectionColor: 'green.300'
 
               }} 
               placeholder={placeholder}

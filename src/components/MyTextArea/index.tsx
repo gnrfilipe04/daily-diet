@@ -49,6 +49,7 @@ export function MyTextArea<T extends FieldValues>({
               _focus={{
                 placeholderTextColor: 'gray.100',
                 borderColor: 'green.300',
+                selectionColor: 'green.300'
               }} 
               placeholder={placeholder}
               value={value}
